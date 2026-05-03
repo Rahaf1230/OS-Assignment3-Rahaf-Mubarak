@@ -128,7 +128,11 @@ These issues occur because threads execute concurrently without mutual exclusion
 **Q**: Explain the difference between ReentrantLock and Semaphore. Where did you use each in your code and why?
 
 **Your Answer**:
+ReentrantLock is used to ensure mutual exclusion, allowing only one thread to access a critical section at a time. It is suitable for protecting shared variables.
 
+Semaphore, on the other hand, controls access to a limited number of resources. It allows a fixed number of threads to access a resource simultaneously.
+
+In my code, I used ReentrantLock to protect shared counters and execution log, and a binary Semaphore to ensure only one process accesses the CPU at a time.
 [Your answer here - explain your implementation choices]
 
 ---
@@ -137,8 +141,16 @@ These issues occur because threads execute concurrently without mutual exclusion
 **Q**: What is deadlock? Explain TWO prevention techniques and what you did to prevent deadlocks in your code.
 
 **Your Answer**:
+Deadlock is a situation where two or more threads are waiting indefinitely for each other to release resources.
 
-[Your answer here - reference try-finally blocks, lock ordering, etc.]
+One prevention technique is using try-finally blocks to ensure locks are always released.
+
+Another technique is maintaining a consistent locking order.
+
+In my implementation, I used try-finally blocks for both locks and semaphore release to ensure no thread
+holds a resource forever.
+
+
 
 ---
 
@@ -150,7 +162,15 @@ These issues occur because threads execute concurrently without mutual exclusion
 - Given that the three counters are independent, which approach provides better concurrency and why?
 
 **Your Answer**:
+used a single lock (coarse-grained locking) to protect all shared counters.
 
+This approach simplifies the implementation and avoids complexity in managing multiple locks.
+
+However, it reduces concurrency because only one thread can access any counter at a time.
+
+Fine-grained locking (separate locks) would improve concurrency but increases complexity and risk of deadlock.
+
+Since the counters are simple and frequently accessed, coarse-grained locking is acceptable for this assignment
 [Your answer here - explain coarse-grained vs fine-grained locking, independence of counters, concurrency implications. Show understanding of when to use each approach. 5-8 sentences expected.]
 
 ---
