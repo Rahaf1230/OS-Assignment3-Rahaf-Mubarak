@@ -254,7 +254,7 @@ Ensures controlled execution and prevents simultaneous CPU usage.
 **Results**: 
 (Show that running multiple times produces consistent, correct results)
 ⏱ Time Quantum:  4000ms                                                           ║
-║  🔑 Student ID:    445052025                                                        ║
+║  🔑 Student ID:    445052029                                                        ║
 ║  🔒 Sync Mode:     Mutex Locks & Semaphore
 **Why synchronization is necessary**: 
 (Explain what race conditions COULD occur without synchronization, even if you didn't observe them. Explain which shared resources need protection and why.)
