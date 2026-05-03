@@ -179,53 +179,66 @@ Since the counters are simple and frequently accessed, coarse-grained locking is
 
 ### Critical Section #1: Counter Variables
 
-**Which variables**: 
+**Which variables**:  contextSwitchCount, completedProcessCount, totalWaitingTime
 
-**Why they need protection**: 
+**Why they need protection**:  They are shared among multiple threads and can be updated simultaneously.
 
 **Synchronization mechanism used**: 
-
+ReentrantLock
 **Code snippet**:
 ```java
 // Paste your implementation here
+lock.lock();
+try {
+    contextSwitchCount++;
+} finally {
+    lock.unlock();
+}
 ```
 
 **Justification**: 
-
+Ensures atomic updates and prevents lost updates.
 ---
 
 ### Critical Section #2: Execution Log
 
-**What resource**: 
+**What resource**: executionLog (ArrayList)
 
 **Why it needs protection**: 
-
+ArrayList is not thread-safe and concurrent access may cause inconsistency.
 **Synchronization mechanism used**: 
-
+ReentrantLock
 **Code snippet**:
 ```java
 // Paste your implementation here
 ```
-
+lock.lock();
+try {
+    executionLog.add(message);
+} finally {
+    lock.unlock();
+}
 **Justification**: 
-
+Prevents concurrent modification issue
 ---
 
 ### Critical Section #3: CPU Semaphore
 
 **Purpose of semaphore**: 
-
+Control CPU acces
 **Number of permits and why**: 
-
+1 permit → only one process at a time
 **Where implemented**: 
-
+Inside run() method
 **Code snippet**:
 ```java
 // Paste your implementation here
-```
+``SharedResources.cpuSemaphore.acquire();
+
+SharedResources.cpuSemaphore.release();`
 
 **Effect on program behavior**: 
-
+Ensures controlled execution and prevents simultaneous CPU usage.
 ---
 
 ## Part 4: Testing and Verification (2 marks)
