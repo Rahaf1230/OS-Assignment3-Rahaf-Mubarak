@@ -1,7 +1,7 @@
 # Assignment 3 - Complete Documentation
 
-**Student Name**: [Your Full Name]  
-**Student ID**: [Your ID]  
+**Student Name**: [Rahaf Mubarak Aldawsari]  
+**Student ID**: [445052029]  
 **Date Submitted**: [Submission Date]
 
 ---
@@ -16,7 +16,7 @@
 
 **Video Link**: [Paste your personal Gmail Google Drive link here]
 
-**Video filename**: `[YourStudentID]_Assignment3_Synchronization.mp4`
+**Video filename**: `445052029_Assignment3_Synchronization.mp4`
 
 **Verification**:
 - [ ] Link is accessible (tested in incognito mode)
@@ -31,69 +31,78 @@
 
 Document your development process with **minimum 3 entries** showing progression:
 
-### Entry 1 - [Date, Time]
+### Entry 1 -May 3, 2026 (3:00 PM)
 **What I implemented**: 
+
+I started by analyzing the provided code and identifying shared resources such as counters and execution log.
 
 **Challenges encountered**: 
 
+Understanding where race conditions occur in multithreaded execution.
+
 **How I solved it**: 
 
+reviewed the lecture slides and textbook concepts about race conditions.
+
 **Testing approach**: 
-
+horan the program without synchronization to observe behavior.
 **Time spent**: 
+2 hours
 
+Entry 2 - May 5, 20
 ---
 
-### Entry 2 - [Date, Time]
+### Entry 2 - May 3, 2026 (6:00 PM)
 **What I implemented**: 
 
+Added ReentrantLock to protect shared counters (contextSwitchCount, completedProcessCount, totalWaitingTime).
 **Challenges encountered**: 
-
+Ensuring correct placement of lock and unloc
 **How I solved it**: 
-
+Used try-finally blocks as recommended in OS concepts
 **Testing approach**: 
-
+Tested program multiple times to verify consistent results.
 **Time spent**: 
-
+1 hours
 ---
 
-### Entry 3 - [Date, Time]
+### Entry 3 -May 4, 2026 (7:00 PM)
 **What I implemented**: 
-
+Protected executionLog using the same lock to avoid ConcurrentModificationException.
 **Challenges encountered**: 
-
+Understanding why ArrayList is not thread-safe.
 **How I solved it**: 
-
+lied lock around add() operation
 **Testing approach**: 
-
+Ran program repeatedly and checked log size
 **Time spent**: 
-
+1.15 hours
 ---
 
-### Entry 4 - [Date, Time]
+### Entry 4 -May 5, 2026 (12:00 PM)
 **What I implemented**: 
-
+Added Semaphore to control CPU access.
 **Challenges encountered**: 
-
+Understanding how semaphore limits concurrent execution.
 **How I solved it**: 
-
+Used binary semaphore (1 permit) before process execution.
 **Testing approach**: 
-
+Verified that only one process executes at a time.
 **Time spent**: 
-
+2 hours
 ---
 
-### Entry 5 - [Date, Time]
+### Entry 5 - May 3, 2026 (5:00 PM)
 **What I implemented**: 
-
+Final testing, debugging, and validation of output
 **Challenges encountered**: 
-
+Ensuring no deadlocks occur.
 **How I solved it**: 
-
+Used try-finally to always release locks and semaphores.
 **Testing approach**: 
-
+Ran program 5+ times and compared results.
 **Time spent**: 
-
+1.5 hours
 ---
 
 ## Part 2: Technical Questions (1 mark)
@@ -103,8 +112,13 @@ Document your development process with **minimum 3 entries** showing progression
 - What shared resource is affected?
 - Why is concurrent access a problem?
 - What incorrect behavior could occur?
-
+  
 **Your Answer**:
+First, the variable contextSwitchCount is shared among threads. Multiple threads may increment it simultaneously, causing incorrect values due to lost updates.
+
+Second, the executionLog (ArrayList) is accessed by multiple threads without synchronization. Since ArrayList is not thread-safe, concurrent modifications may lead to inconsistent data or runtime exceptions.
+
+These issues occur because threads execute concurrently without mutual exclusion, leading to unpredictable behavior.
 
 [Your answer here - 4-6 sentences with code examples]
 

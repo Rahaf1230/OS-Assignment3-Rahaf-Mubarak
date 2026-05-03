@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.Semaphore;
-    
+
 }
+
 // ANSI Color Codes for enhanced terminal output
 class Colors {
     public static final String RESET = "\u001B[0m";
@@ -41,12 +42,12 @@ class SharedResources {
 
     // TODO #1: Add a ReentrantLock(s) here to protect critical sections
     // Example: public static final ReentrantLock lock = new ReentrantLock();
-     //Added ReentrantLouk for protecting shared resources
-     public static final ReentrantLock lock=new ReentrantLock();
+    // Added ReentrantLouk for protecting shared resources
+    public static final ReentrantLock lock = new ReentrantLock();
 
     // TODO #2: Add a Semaphore to limit concurrent process execution
     // Example: public static final Semaphore cpuSemaphore = new Semaphore(1);
-       public static final Semaphore cpuSemaphore=new Semaphore(1);
+    public static final Semaphore cpuSemaphore = new Semaphore(1);
 
     // Method to increment context switch counter
     public static void incrementContextSwitch() {
@@ -54,47 +55,47 @@ class SharedResources {
         // RACE CONDITION: Multiple threads might read and write simultaneously!
         lock.lock();
         try {
-               contextSwitchCount++;
-             } finally{
-                lock.unlock();
-             }
+            contextSwitchCount++;
+        } finally {
+            lock.unlock();
+        }
     }
 
     // Method to increment completed process counter
     public static void incrementCompletedProcess() {
         // TODO: Protect this critical section with a lock
-        //add synchronization for completedProcessCount
-         lock.lock();
+        // add synchronization for completedProcessCount
+        lock.lock();
         try {
-               completedProcessCount++;
-             } finally{
-                lock.unlock();
-             }
+            completedProcessCount++;
+        } finally {
+            lock.unlock();
+        }
     }
 
     // Method to add waiting time
     public static void addWaitingTime(long time) {
         // TODO: Protect this critical section with a lock
-         //add synchronization for totalWaitingTime
-         lock.lock();
+        // add synchronization for totalWaitingTime
+        lock.lock();
         try {
-               totalWaitingTime++;
-             } finally{
-                lock.unlock();
-             }
+            totalWaitingTime++;
+        } finally {
+            lock.unlock();
+        }
     }
 
     // Method to log execution
     public static void logExecution(String message) {
         // TODO: Protect this critical section with a lock
         // RACE CONDITION: ArrayList is not thread-safe!
-      //add synchronization for executionLog
-         lock.lock();
+        // add synchronization for executionLog
+        lock.lock();
         try {
-              executionLog.add(message);
-             } finally{
-                lock.unlock();
-             }
+            executionLog.add(message);
+        } finally {
+            lock.unlock();
+        }
     }
 }
 
@@ -123,12 +124,12 @@ class Process implements Runnable {
     public void run() {
         // TODO #3: Acquire CPU semaphore before executing
         // This ensures only allowed number of processes run simultaneously
-           //Acquire CPU access before execution
-             try  {
-                SharedResources.cpuSemaphore.acquire();
-             } catch (InterruptedException e) {
-                e.printStackTrace();
-             }
+        // Acquire CPU access before execution
+        try {
+            SharedResources.cpuSemaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         try {
             if (startTime == -1) {
@@ -213,39 +214,41 @@ class Process implements Runnable {
 
     public void runToCompletion() {
         // TODO: Similar synchronization needed here
-       // Acquire CPU access for final execution
-        try{
+        // Acquire CPU access for final execution
+        try {
             SharedResources.cpuSemaphore.acquire();
-        
-           try {
-            System.out.println(Colors.BRIGHT_CYAN + "  ⚡ " + Colors.BOLD + Colors.CYAN + name +
-                    Colors.RESET + Colors.BRIGHT_CYAN + " is the last process, running to completion" +
-                    Colors.RESET + " [" + remainingTime + "ms]");
-            Thread.sleep(remainingTime);
-            remainingTime = 0;
-            completionTime = System.currentTimeMillis();
 
-            long waitingTime = (completionTime - creationTime) - burstTime;
-            SharedResources.addWaitingTime(waitingTime);
-            SharedResources.incrementCompletedProcess();
+            try {
+                System.out.println(Colors.BRIGHT_CYAN + "  ⚡ " + Colors.BOLD + Colors.CYAN + name +
+                        Colors.RESET + Colors.BRIGHT_CYAN + " is the last process, running to completion" +
+                        Colors.RESET + " [" + remainingTime + "ms]");
+                Thread.sleep(remainingTime);
+                remainingTime = 0;
+                completionTime = System.currentTimeMillis();
 
-            System.out.println(Colors.BRIGHT_GREEN + "  ✓ " + Colors.BOLD + Colors.CYAN + name +
-                    Colors.RESET + Colors.BRIGHT_GREEN + " finished execution!" + Colors.RESET);
-            System.out.println();
-         } catch (InterruptedException e) {
-          
-            System.out.println(Colors.RED + "  ✗ " + name + " was interrupted." + Colors.RESET);
-      } 
+                long waitingTime = (completionTime - creationTime) - burstTime;
+                SharedResources.addWaitingTime(waitingTime);
+                SharedResources.incrementCompletedProcess();
 
-      } catch(InterruptedException e ) {
-        e.printStackTrace();
-      }
-      finally{
-        //Release CPU access
-        SharedResources.cpuSemaphore.release(); 
-      }
-    }
+                System.out.println(Colors.BRIGHT_GREEN + "  ✓ " + Colors.BOLD + Colors.CYAN + name +
+                        Colors.RESET + Colors.BRIGHT_GREEN + " finished execution!" + Colors.RESET);
+                System.out.println();
+            } catch (InterruptedException e) {
+
+                System.out.println(Colors.RED + "  ✗ " + name + " was interrupted." + Colors.RESET);
+            }
+
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+             finally{
+          // Release CPU access
+        SharedResources.cpuSemaphore.release();
     
+        
+    }
+}
+
     public String getName() {
         return name;
     }
