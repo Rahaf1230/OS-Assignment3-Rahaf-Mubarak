@@ -291,9 +291,10 @@ Ensures controlled execution and prevents simultaneous CPU usage.
 **Scenario tested**: [e.g., different time quantum, more processes, etc.]
 
 **Purpose**: 
-
+different numbers of processes and time quantum values generated using the random seed (student ID).
 **Results**: 
 
+program successfully handled different scenarios without errors. Regardless of the number of processes or time quantum values, all processes completed execution and statistics remained accurate.
 **What I learned**: 
 
 ---
@@ -301,38 +302,47 @@ Ensures controlled execution and prevents simultaneous CPU usage.
 ## Part 5: Reflection and Learning
 
 ### What I learned about synchronization:
-
+Synchronization ensures that the system behaves correctly regardless of input variability. It makes the program robust and reliable under different execution conditions.
 [6-8 sentences about key concepts, challenges, insights]
 
 ---
 
 ### Real-world applications:
-
+hrough this assignment, I learned that synchronization is essential in multithreaded systems to prevent race conditions and ensure data consistency. I understood how shared resources can lead to unpredictable behavior when accessed concurrently. Using ReentrantLock helped me implement mutual exclusion, ensuring that only one thread accesses critical sections at a time. I also learned how semaphores control access to limited resources such as CPU execution. Another important concept was the use of try-finally blocks to prevent deadlocks by guaranteeing resource release. Additionally, I realized the importance of thread-safe data structures and proper synchronization design. Overall, this assignment strengthened my understanding of concurrency control in operating systems.
 Give TWO examples where synchronization is critical:
 
 **Example 1**: 
 
+Banking systems where multiple users access and update account balances simultaneously. Synchronization ensures that transactions are processed correctly without losing updates.
 **Example 2**: 
-
+operating system process scheduling, where multiple processes compete for CPU access. Synchronization ensures fair and controlled execution.
 ---
 
 ### How I would explain synchronization to others:
-
+synchronization is like managing access to a shared resource such as a printer. If multiple people try to use it at the same time, their jobs may get mixed up. So, we use a system where only one person can use the printer at a time. In programming, synchronization ensures that only one thread accesses shared data at a time to avoid conflicts and errors.
 [Explain to someone who just finished Assignment 1 - use simple terms and analogies]
 
 ---
 
 ## Part 6: GitHub Repository Information
 
-**Repository URL**: 
+**Repository URL**:  https://github.com/Rahaf1230/OS-Assignment3-Rahaf-Mubarak.git
 
-**Number of commits**: 
+**Number of commits**: 14
 
 **Commit messages**: 
-1. 
-2. 
-3. 
-4. 
+1. change my student id to 445052029
+2.Add ReentrantLouck and import package 
+3. add semaphore and import its package for synchronization
+4. Secured the shared variable (contextSwitchCount) using a ReentrantLoc
+5. protect the shared variable completedProcessCount using ReentrantLock
+6. protecting shared variable totalWaitingTime using ReentrantLock
+7. protecting executionLog
+8. use Semaphore to control CPU access in process execution and in fina
+9. Apply semaphore in runToCompletion method
+10. answering Part 1: Development Log
+11. answer Part 2: Technical Questions
+12. annswer art 3: Synchronization Analysis
 
 ---
 
@@ -341,14 +351,16 @@ Give TWO examples where synchronization is critical:
 **Total time spent on assignment**: 
 
 **Key takeaways**: 
-1. 
-2. 
-3. 
+1. Synchronization is essential to prevent race conditions.
+2.Locks ensure mutual exclusion in critical sections 
+3. Semaphores control access to limited resources like CPU
 
 **Most challenging aspect**: 
 
+Understanding where race conditions occur and correctly applying synchronization without causing deadlocks.
 **What I'm most proud of**: 
 
+Successfully implementing synchronization mechanisms that ensure correct and consistent program execution across multiple runs.
 ---
 
 **End of Documentation**
