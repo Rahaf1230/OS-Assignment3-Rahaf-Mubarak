@@ -281,7 +281,7 @@ Ensures controlled execution and prevents simultaneous CPU usage.
 
 **Actual values**: 
 ⏱ Time Quantum:  4000ms                                                           ║
-║  🔑 Student ID:    445052025                                                        ║
+║  🔑 Student ID:    445052029                                                       ║
 ║  🔒 Sync Mode:     Mutex Locks & Semaphore
 **Analysis**: 
 
